@@ -16,16 +16,16 @@ struct Ratings : Codable {
 	}
     
     //To get rating value out of 5
-    public func getRatingValue() -> Int{
+    public func getRatingValue() -> Float{
         if let value = value{
             if value.contains("%"){
                 if let wholeValue =  Float(value.split(separator: "%", omittingEmptySubsequences: true).first ?? "0"){
-                    return Int((wholeValue/100) * 5)
+                    return (wholeValue/100) * 5
                 }
             }else if value.contains("/"){
                 let values =  value.split(separator: "/", omittingEmptySubsequences: true)
                 if let value1 = Float(values[0]),let value2 = Float(values[1]){
-                    return Int((value1/value2) * 5)
+                    return (value1/value2) * 5
                 }
             }
         }
