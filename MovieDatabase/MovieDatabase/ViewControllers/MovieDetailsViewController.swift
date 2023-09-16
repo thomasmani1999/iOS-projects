@@ -38,17 +38,24 @@ class MovieDetailsViewController: UIViewController {
     //Update number of starts in rartigs view
     func updateRatings(source:String) {
         if let rating = movie?.ratings?.first(where: { $0.source == source }) {
-            let ratingvalue = rating.getRatingValue()
+            var ratingvalue = rating.getRatingValue()
             for view in starRatingView.subviews {
                 view.removeFromSuperview()
             }
-            for _ in 0..<ratingvalue {
+            for _ in 0..<Int(ratingvalue) {
                 let view = UIImageView(image: UIImage(systemName: "star.fill"))
                 view.heightAnchor.constraint(equalToConstant: 25).isActive = true
                 view.widthAnchor.constraint(equalToConstant: 25).isActive = true
                 starRatingView.addArrangedSubview(view)
             }
-            for _ in ratingvalue..<5 {
+            if ratingvalue.truncatingRemainder(dividingBy: 1) >= 0.5{
+                ratingvalue += 1
+                let view = UIImageView(image: UIImage(systemName: "star.leadinghalf.fill"))
+                view.heightAnchor.constraint(equalToConstant: 25).isActive = true
+                view.widthAnchor.constraint(equalToConstant: 25).isActive = true
+                starRatingView.addArrangedSubview(view)
+            }
+            for _ in Int(ratingvalue)..<5 {
                 let view = UIImageView(image: UIImage(systemName: "star"))
                 view.heightAnchor.constraint(equalToConstant: 25).isActive = true
                 view.widthAnchor.constraint(equalToConstant: 25).isActive = true
